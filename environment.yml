@@ -1,0 +1,19 @@
+name: macro-quant
+channels: [conda-forge, defaults]
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - scipy
+  - statsmodels
+  - scikit-learn
+  - pip
+  - pip:
+      - yfinance
+      - plotly
+      - dash
+      - arch
+      - ruptures
+      - pyarrow
+      - black
+      - pytest
