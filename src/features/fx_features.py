@@ -2,19 +2,27 @@ import numpy as np
 import pandas as pd
 
 def make_fx_features(prices: pd.DataFrame, window: int = 20):
-    """
-    Build simple FX features from a wide price DataFrame (columns = tickers).
-    Returns a dict with:
-      - 'returns': log returns (same columns, one fewer row)
-      - 'vol_rolling': rolling annualized volatility over `window` days
-    """
-    if not isinstance(prices, pd.DataFrame):
-        raise TypeError("prices must be a pandas DataFrame")
-
-    # basic sanity: need at least window+1 rows to compute rolling vol
-    if prices.shape[0] < window + 1:
-        raise ValueError(f"need at least {window+1} rows, got {prices.shape[0]}")
-
     rets = np.log(prices).diff().dropna()
     vol = rets.rolling(window).std() * np.sqrt(252)
     return {"returns": rets, "vol_rolling": vol}
+
+def tag_regimes(vol_series: pd.Series, threshold="median") -> pd.Series:
+    """
+    Label each date as 'low' or 'high' volatility.
+
+    threshold:
+      - 'median' -> split by the series median
+      - float    -> absolute cutoff (e.g., 0.025 for 2.5% daily vol)
+
+    Returns: pd.Series with same index containing 'low'/'high'
+    """
+    if not isinstance(vol_series, pd.Series):
+        raise TypeError("vol_series must be a pandas Series")
+
+    if isinstance(threshold, str) and threshold.lower() == "median":
+        cutoff = vol_series.median()
+    else:
+        cutoff = float(threshold)
+
+    labels = np.where(vol_series > cutoff, "high", "low")
+    return pd.Series(labels, index=vol_series.index, name="regime")
