@@ -1,4 +1,4 @@
-# quant
+# Macro-Quant-Toolkit
 
 # Macro-Quant-Toolkit
 Three mini-projects in one: (1) Yield curve modeling, (2) EM FX volatility, (3) Anomaly detection on macro spreads.
