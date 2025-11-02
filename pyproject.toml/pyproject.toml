@@ -1,14 +1,13 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "macro_quant_toolkit"
+name = "mqtoolkit"
 version = "0.1.0"
 description = "Macro Quant Toolkit for quantitative research"
 readme = "README.md"
 requires-python = ">=3.11"
 
-[tool.setuptools]
-package-dir = {"" = "src"}
-packages = ["src"]
+[tool.setuptools.packages.find]
+where = ["src"]

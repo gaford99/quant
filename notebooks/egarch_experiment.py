@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 
-from src.data.fetch_fx import get_fx_history
-from src.features.fx_features import make_fx_features
-from src.models.garch_fx import fit_garch, forecast_volatility
-from src.models.egarch_fx import fit_egarch, forecast_egarch_volatility
+from mqtoolkit.data.fetch_fx import get_fx_history
+from mqtoolkit.fx_features import make_fx_features
+from mqtoolkit.models.garch_fx import fit_garch, forecast_volatility
+from mqtoolkit.models.egarch_fx import fit_egarch, forecast_egarch_volatility
 
 # 1) data: EM FX prices -> daily log returns
 fx = get_fx_history(period="10y", interval="1d")
